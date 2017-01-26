@@ -219,11 +219,15 @@ public class AddressBook {
 
 		loadDataFromStorage();
 		while (true) {
-			String userCommand = getUserInput();
-			echoUserCommand(userCommand);
-			String feedback = executeCommand(userCommand);
-			showResultToUser(feedback);
+			processInputCommands();
 		}
+	}
+
+	private static void processInputCommands() {
+		String userCommand = getUserInput();
+		echoUserCommand(userCommand);
+		String feedback = executeCommand(userCommand);
+		showResultToUser(feedback);
 	}
 
 	/*
@@ -266,16 +270,19 @@ public class AddressBook {
 	 *            full program arguments passed to application main method
 	 */
 	private static void processProgramArgs(String[] args) {
-		if (args.length >= 2) {
+		int lengthLimit = 2;
+		int lengthGivenFile = 1;
+		int lengthDefaultFile = 0;
+		if (args.length >= lengthLimit) {
 			showToUser(MESSAGE_INVALID_PROGRAM_ARGS);
 			exitProgram();
 		}
 
-		if (args.length == 1) {
+		if (args.length == lengthGivenFile) {
 			setupGivenFileForStorage(args[0]);
 		}
 
-		if (args.length == 0) {
+		if (args.length == lengthDefaultFile) {
 			setupDefaultFileForStorage();
 		}
 	}
